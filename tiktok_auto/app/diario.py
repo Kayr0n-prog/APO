@@ -57,7 +57,7 @@ def clipes_pixabay(api, est, n, usados, cfg, log):
         ok = 0
         for h in hits:
             pid = "v%d" % h["id"]
-            if pid in usados or any(p in (h.get("tags") or "").lower() for p in proib) or h.get("duration", 0) < 4:
+            if pid in usados or pid in cfg.get("pixabay_bloqueados", []) or any(p in (h.get("tags") or "").lower() for p in proib) or h.get("duration", 0) < 4:
                 continue
             v = h.get("videos", {}).get("large") or h.get("videos", {}).get("medium") or {}
             if not v.get("url") or v.get("width", 0) < v.get("height", 1) or v.get("height", 0) < 720:

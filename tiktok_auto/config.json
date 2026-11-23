@@ -44,7 +44,11 @@
     "render",
     "drawing",
     "digital art",
-    "fantasy"
+    "fantasy",
+    "gym",
+    "bodybuilding",
+    "dumbbell",
+    "weightlifting"
   ],
   "montagem": {
     "largura": 960,
@@ -54,5 +58,8 @@
     "fonte": "Inter Medium",
     "texto_rel": 0.042
   },
-  "pasta_banco_local": "%USERPROFILE%\\Pictures\\TikTokBanco"
+  "pasta_banco_local": "%USERPROFILE%\\Pictures\\TikTokBanco",
+  "pixabay_bloqueados": [
+    "v39376"
+  ]
 }
