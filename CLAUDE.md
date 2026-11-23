@@ -12,6 +12,7 @@ eles foram reprovados.
   afirmações em loop, plano único + texto, flores time-lapse em fundo preto, fala + tipografia,
   narração + B-roll) e citar qual inspiração (vNN) está imitando.
 - Ritmo: cortes secos numa grade fixa de batidas (0,2–0,3 s nas montagens curtas).
+- Frases: usar `tiktok_auto/data/frases.json` e seguir `tiktok_auto/docs/estudo_frases.md`.
 - Texto: frase curta, branca, pequena, centralizada, uma fonte só, minúsculas.
 - Paleta única por vídeo; imagens reais (sem IA/ilustração); nada de efeitos sintéticos.
 - Formato preferido: horizontal 4:3; vídeos sem música (o som é escolhido no TikTok).
