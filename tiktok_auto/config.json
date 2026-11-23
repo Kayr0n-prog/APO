@@ -45,5 +45,14 @@
     "drawing",
     "digital art",
     "fantasy"
-  ]
+  ],
+  "montagem": {
+    "largura": 960,
+    "altura": 720,
+    "duracao_s": 12,
+    "clipes_min": 8,
+    "fonte": "Inter Medium",
+    "texto_rel": 0.042
+  },
+  "pasta_banco_local": "%USERPROFILE%\\Pictures\\TikTokBanco"
 }

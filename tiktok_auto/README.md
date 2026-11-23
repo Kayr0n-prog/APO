@@ -1,4 +1,11 @@
-# tiktok_auto — 3 vídeos por dia com material do Pixabay
+# tiktok_auto — 3 vídeos por dia no formato das inspirações
+
+> **Formato atual (app/diario.py, usado por run.py):** montagem rápida horizontal 4:3 (960×720),
+> 12 s, cortes secos de 0,25–0,6 s, uma frase fixa pequena e centralizada (data/frases.json),
+> estilos clean/noite/zen/luxo/cosmos/flores baseados nas inspirações v07, v08, v12, v16, v17, v22, v23, v29.
+> Imagens: banco da conta (coloque as imagens do Drive em `%USERPROFILE%\Pictures\TikTokBanco`,
+> nomes como em data/banco_local.json) + clipes do Pixabay. A seção abaixo descreve a versão anterior (slides 9:16), mantida em app/main.py.
+
 
 Gera todos os dias 3 vídeos verticais 1080×1920, de 15 a 35 s e **sem música**. Cada vídeo tem:
 - clipes e fotos do Pixabay (API oficial);
