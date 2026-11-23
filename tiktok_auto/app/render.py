@@ -140,13 +140,19 @@ def montagem(clipes, frase, grade, cfg, fontes_dir, pasta_trab, saida, log):
         c = clipes[i % len(clipes)]
         volta = i // len(clipes)
         quadros = int(round((i + 1) * corte * fps)) - int(round(i * corte * fps))
-        util = max(0.0, c.get("duracao", 5) - 1.0)
-        ini = 0.3 + (util * ((volta * 0.37 + 0.15) % 1.0))
+        util = max(0.0, c.get("duracao", 5) - corte - 0.1)
+        ini = util * ((volta * 0.37 + 0.15) % 1.0)
         seg = os.path.join(pasta_trab, "c%03d.mp4" % i)
         if not (os.path.isfile(seg) and os.path.getsize(seg) > 0):
-            vf = ("scale=%d:%d:force_original_aspect_ratio=increase:flags=lanczos,crop=%d:%d,fps=%d,"
-                  "setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=1,format=yuv420p") % (W, H, W, H, fps)
-            run([ffmpeg_bin(), "-v", "error", "-y", "-ss", "%.2f" % ini, "-i", c["arquivo"], "-vf", vf,
+            if cfg.get("encaixe") == "contain":
+                geo = ("scale=%d:%d:force_original_aspect_ratio=decrease:flags=lanczos,"
+                       "pad=%d:%d:(ow-iw)/2:(oh-ih)/2:black") % (W, H, W, H)
+            else:
+                geo = "scale=%d:%d:force_original_aspect_ratio=increase:flags=lanczos,crop=%d:%d" % (W, H, W, H)
+            vf = ("%s,fps=%d,setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=1,format=yuv420p") % (geo, fps)
+            foto = c["arquivo"].lower().endswith((".jpg", ".jpeg", ".png", ".webp"))
+            entrada = ["-loop", "1", "-i", c["arquivo"]] if foto else ["-ss", "%.2f" % min(ini, max(0, c.get("duracao", 1) - corte)), "-i", c["arquivo"]]
+            run([ffmpeg_bin(), "-v", "error", "-y"] + entrada + ["-vf", vf,
                  "-frames:v", str(quadros), "-an", "-c:v", "libx264", "-preset", "fast", "-crf", "14", seg], log)
         lista.append("file '%s'" % os.path.basename(seg))
     with open(os.path.join(pasta_trab, "lista.txt"), "w", encoding="utf-8") as f:
@@ -170,8 +176,8 @@ Style: F,%s,%d,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
-Dialogue: 0,0:00:00.00,%s,F,,0,0,0,,{\\pos(%d,%d)\\blur0.8}%s
-""" % (W, H, t["fonte"], t["tamanho"], int(W * 0.2), int(W * 0.2), ass_tempo(dur), W // 2, int(H * 0.5), frase))
+%s""" % (W, H, t["fonte"], t["tamanho"], int(W * 0.2), int(W * 0.2),
+          ("Dialogue: 0,0:00:00.00,%s,F,,0,0,0,,{\\pos(%d,%d)\\blur0.8}%s\n" % (ass_tempo(dur), W // 2, int(H * 0.5), frase)) if frase else ""))
     run([ffmpeg_bin(), "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", "lista.txt",
          "-vf", "%s,noise=alls=5:allf=t,ass=texto.ass:fontsdir=fonts,format=yuv420p" % grade,
          "-r", str(fps), "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
