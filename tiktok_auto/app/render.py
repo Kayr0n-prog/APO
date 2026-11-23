@@ -126,3 +126,55 @@ def montar(materiais, textos, cfg, ident, fontes_dir, pasta_trab, saida, log):
     run(cmd, log, cwd=pasta_trab)
     os.replace(tmp, saida)
     return total
+
+
+# ------------------------------------------------------------------ montagem rápida
+def montagem(clipes, frase, grade, cfg, fontes_dir, pasta_trab, saida, log):
+    """Formato das inspirações: cortes secos rápidos numa grade fixa, uma frase
+    curta fixa no centro, paleta única. clipes: [{'arquivo','duracao'}]."""
+    W, H, fps = cfg["largura"], cfg["altura"], cfg["fps"]
+    dur, corte = cfg["duracao_s"], cfg["corte_s"]
+    n = int(round(dur / corte))
+    lista = []
+    for i in range(n):
+        c = clipes[i % len(clipes)]
+        volta = i // len(clipes)
+        quadros = int(round((i + 1) * corte * fps)) - int(round(i * corte * fps))
+        util = max(0.0, c.get("duracao", 5) - 1.0)
+        ini = 0.3 + (util * ((volta * 0.37 + 0.15) % 1.0))
+        seg = os.path.join(pasta_trab, "c%03d.mp4" % i)
+        if not (os.path.isfile(seg) and os.path.getsize(seg) > 0):
+            vf = ("scale=%d:%d:force_original_aspect_ratio=increase:flags=lanczos,crop=%d:%d,fps=%d,"
+                  "setpts=PTS-STARTPTS,tpad=stop_mode=clone:stop_duration=1,format=yuv420p") % (W, H, W, H, fps)
+            run([ffmpeg_bin(), "-v", "error", "-y", "-ss", "%.2f" % ini, "-i", c["arquivo"], "-vf", vf,
+                 "-frames:v", str(quadros), "-an", "-c:v", "libx264", "-preset", "fast", "-crf", "14", seg], log)
+        lista.append("file '%s'" % os.path.basename(seg))
+    with open(os.path.join(pasta_trab, "lista.txt"), "w", encoding="utf-8") as f:
+        f.write("\n".join(lista) + "\n")
+    fdir = os.path.join(pasta_trab, "fonts")
+    os.makedirs(fdir, exist_ok=True)
+    for f in os.listdir(fontes_dir):
+        if f.lower().endswith((".ttf", ".otf")):
+            shutil.copy2(os.path.join(fontes_dir, f), fdir)
+    t = cfg["texto"]
+    with open(os.path.join(pasta_trab, "texto.ass"), "w", encoding="utf-8") as f:
+        f.write("""[Script Info]
+ScriptType: v4.00+
+PlayResX: %d
+PlayResY: %d
+WrapStyle: 0
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: F,%s,%d,&H00FFFFFF,&H00FFFFFF,&H00000000,&H80000000,0,0,0,0,100,100,0,0,1,0.6,1.2,5,%d,%d,0,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+Dialogue: 0,0:00:00.00,%s,F,,0,0,0,,{\\pos(%d,%d)\\blur0.8}%s
+""" % (W, H, t["fonte"], t["tamanho"], int(W * 0.2), int(W * 0.2), ass_tempo(dur), W // 2, int(H * 0.5), frase))
+    run([ffmpeg_bin(), "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", "lista.txt",
+         "-vf", "%s,noise=alls=5:allf=t,ass=texto.ass:fontsdir=fonts,format=yuv420p" % grade,
+         "-r", str(fps), "-c:v", "libx264", "-preset", "slow", "-crf", "18", "-pix_fmt", "yuv420p",
+         "-movflags", "+faststart", "-an", "final.mp4"], log, cwd=pasta_trab)
+    os.replace(os.path.join(pasta_trab, "final.mp4"), saida)
+    return n * corte
