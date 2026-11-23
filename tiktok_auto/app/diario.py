@@ -108,8 +108,7 @@ def planejar(i, hoje, hist, estado, cfg, estilos, frases, banco, pasta_banco, ap
         tags = estilos[estilo]["hashtags"][:]
         random.shuffle(tags)
         tags = tags[:4] + ([cfg["hashtag_marca"]] if cfg.get("hashtag_marca") else [])
-        gancho = random.choice(GANCHOS)
-        legenda = "%s ✨\n\n%s\n\n%s 🤍" % (gancho, frase, random.choice(CTAS))
+        legenda = "%s %s\n\n%s" % (frase.rstrip("."), random.choice(["🤍", "✨", "🕊️", "🌙", "🪷"]), " ".join(tags))
         return {"numero": i, "estilo": estilo, "inspiracao": insp, "frase": frase, "corte_s": corte,
                 "encaixe": encaixe, "materiais": mats, "legenda": legenda, "hashtags": tags,
                 "status": "planejado"}, None
@@ -154,7 +153,7 @@ def publicacoes(dia_dir, videos, dia):
             L += ["**Não gerado:** %s" % p.get("erro"), ""]
             continue
         L += ["- Arquivo: `video_%d.mp4`" % p["numero"], "- Frase no vídeo: \"%s\"" % p["frase"], "",
-              "**Legenda (copiar):**", "", "```", p["legenda"], "", " ".join(p["hashtags"]), "```", "",
+              "**Legenda (copiar):**", "", "```", p["legenda"], "```", "",
               "**Fontes:**", ""]
         for m in p["materiais"]:
             if m["tipo"] == "pixabay":
