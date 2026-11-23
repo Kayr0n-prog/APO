@@ -1,0 +1,49 @@
+{
+  "videos_por_dia": 3,
+  "pasta_saida_windows": "%USERPROFILE%\\Videos\\TikTokAuto",
+  "pasta_saida_padrao": "~/TikTokAuto",
+  "dias_sem_repetir_material": 90,
+  "dias_sem_repetir_frase": 45,
+  "video": {
+    "largura": 1080,
+    "altura": 1920,
+    "fps": 30,
+    "bpm_grade": 100,
+    "batidas_por_cena": 4,
+    "transicao_s": 0.5,
+    "cenas_min": 8,
+    "cenas_max": 12,
+    "max_fotos_por_video": 3,
+    "crf": 20
+  },
+  "qualidade_minima": {
+    "video_retrato_largura": 1080,
+    "video_retrato_altura": 1920,
+    "video_paisagem_altura_para_recorte": 2160,
+    "foto_lado_maior": 1280,
+    "duracao_minima_clipe_s": 4
+  },
+  "identidade": {
+    "fonte": "Cormorant Garamond SemiBold",
+    "tamanho_gancho": 112,
+    "tamanho_frase": 92,
+    "cor_texto": "&H00F4F8FF",
+    "cor_contorno": "&H00101418",
+    "minusculas": true,
+    "grade_cor": "eq=saturation=0.88:contrast=1.04:brightness=-0.01,colorbalance=rs=0.03:bs=-0.03,vignette=PI/5,noise=alls=3:allf=t"
+  },
+  "hashtag_marca": "#todosdias",
+  "filtro_tags_proibidas": [
+    "ai generated",
+    "generated",
+    "illustration",
+    "cartoon",
+    "animation",
+    "anime",
+    "3d",
+    "render",
+    "drawing",
+    "digital art",
+    "fantasy"
+  ]
+}
