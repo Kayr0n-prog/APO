@@ -1,44 +1,186 @@
 {
   "clean": {
     "nome": "Clean girl (bege, branco, lírios)",
-    "buscas": ["white lily flower", "candle light", "coffee book", "white bed linen", "pilates", "skincare cream", "bathtub foam", "white flowers vase", "morning coffee", "woman yoga white"],
+    "buscas": [
+      "white lily flower",
+      "candle light",
+      "coffee book",
+      "white bed linen",
+      "pilates",
+      "skincare cream",
+      "bathtub foam",
+      "white flowers vase",
+      "morning coffee",
+      "woman yoga white"
+    ],
     "grade": "eq=saturation=0.55:contrast=0.96:brightness=0.03,colorbalance=rs=0.04:gs=0.02:bs=-0.04,curves=all='0/0.05 1/0.97'",
-    "frases": ["foca em você, por você.", "a minha melhor versão.", "rotina de quem se escolhe.", "calma, foco e constância.", "eu sou a prioridade.", "vida tranquila, mente em paz."],
-    "hashtags": ["#thatgirl", "#cleangirl", "#rotina", "#autocuidado", "#aesthetic"]
+    "frases": [
+      "foca em você, por você.",
+      "a minha melhor versão.",
+      "rotina de quem se escolhe.",
+      "calma, foco e constância.",
+      "eu sou a prioridade.",
+      "vida tranquila, mente em paz."
+    ],
+    "hashtags": [
+      "#thatgirl",
+      "#cleangirl",
+      "#rotina",
+      "#autocuidado",
+      "#aesthetic"
+    ]
   },
   "zen": {
     "nome": "Zen (verde, névoa, água, Buda)",
-    "buscas": ["buddha statue", "bamboo forest", "waterfall forest", "tea ceremony", "lotus pond", "misty mountain", "zen stones water", "rain leaves", "monk meditation", "japanese garden"],
+    "buscas": [
+      "buddha statue",
+      "bamboo forest",
+      "waterfall forest",
+      "tea ceremony",
+      "lotus pond",
+      "misty mountain",
+      "zen stones water",
+      "rain leaves",
+      "monk meditation",
+      "japanese garden"
+    ],
     "grade": "eq=saturation=0.7:contrast=1.02:brightness=-0.03,colorbalance=rs=-0.02:gs=0.02:bs=0.01",
-    "frases": ["você não precisa entender tudo para encontrar a paz.", "o que é seu não passa por você.", "silêncio também é resposta.", "respira. tudo tem seu tempo.", "a paz começa em você.", "solte o que não é seu."],
-    "hashtags": ["#paz", "#espiritualidade", "#zen", "#meditação", "#reflexão"]
+    "frases": [
+      "você não precisa entender tudo para encontrar a paz.",
+      "o que é seu não passa por você.",
+      "silêncio também é resposta.",
+      "respira. tudo tem seu tempo.",
+      "a paz começa em você.",
+      "solte o que não é seu."
+    ],
+    "hashtags": [
+      "#paz",
+      "#espiritualidade",
+      "#zen",
+      "#meditação",
+      "#reflexão"
+    ]
   },
   "noite": {
     "nome": "Noturno quente (velas, abajur, chuva)",
-    "buscas": ["candle night", "fireplace", "night city lights", "rain window night", "lamp warm room", "woman reading night", "candles dark", "night street lights", "warm bedroom", "tea night"],
+    "buscas": [
+      "candle night",
+      "fireplace",
+      "night city lights",
+      "rain window night",
+      "lamp warm room",
+      "woman reading night",
+      "candles dark",
+      "night street lights",
+      "warm bedroom",
+      "tea night"
+    ],
     "grade": "eq=saturation=1.05:contrast=1.06:brightness=-0.04,colorbalance=rs=0.10:gs=0.03:bs=-0.10",
-    "frases": ["foca em você, por você.", "trabalhando em silêncio.", "ninguém vê, mas eu estou mudando.", "sozinha, mas não perdida.", "a noite é minha.", "construindo a vida que eu quero."],
-    "hashtags": ["#foco", "#disciplina", "#motivação", "#noite", "#aesthetic"]
+    "frases": [
+      "foca em você, por você.",
+      "trabalhando em silêncio.",
+      "ninguém vê, mas eu estou mudando.",
+      "sozinha, mas não perdida.",
+      "a noite é minha.",
+      "construindo a vida que eu quero."
+    ],
+    "hashtags": [
+      "#foco",
+      "#disciplina",
+      "#motivação",
+      "#noite",
+      "#aesthetic"
+    ]
   },
   "luxo": {
     "nome": "Luxo (iates, viagens, champanhe)",
-    "buscas": ["yacht sea", "private jet", "luxury car", "champagne glass", "luxury hotel pool", "mansion", "jewelry", "sports car", "luxury villa sea", "first class travel"],
+    "buscas": [
+      "yacht sea",
+      "private jet",
+      "luxury car",
+      "champagne glass",
+      "luxury hotel pool",
+      "mansion",
+      "jewelry",
+      "sports car",
+      "luxury villa sea",
+      "first class travel"
+    ],
     "grade": "eq=saturation=0.9:contrast=1.05,colorbalance=rs=0.04:bs=-0.02",
-    "frases": ["manifestando esse futuro.", "um dia vai ser a minha rotina.", "a vida que eu estou construindo.", "eu mereço viver assim.", "visualize. planeje. conquiste.", "é só questão de tempo."],
-    "hashtags": ["#manifestação", "#luxo", "#vidadossonhos", "#visualização", "#leidaatração"]
+    "frases": [
+      "manifestando esse futuro.",
+      "um dia vai ser a minha rotina.",
+      "a vida que eu estou construindo.",
+      "eu mereço viver assim.",
+      "visualize. planeje. conquiste.",
+      "é só questão de tempo."
+    ],
+    "hashtags": [
+      "#manifestação",
+      "#luxo",
+      "#vidadossonhos",
+      "#visualização",
+      "#leidaatração"
+    ]
   },
   "cosmos": {
     "nome": "Espiritual cósmico (galáxias, estrelas, luz)",
-    "buscas": ["galaxy", "stars night sky", "nebula", "aurora borealis", "moon", "milky way", "light rays", "sun rays clouds", "space", "starry sky timelapse"],
+    "buscas": [
+      "galaxy",
+      "stars night sky",
+      "nebula",
+      "aurora borealis",
+      "moon",
+      "milky way",
+      "light rays",
+      "sun rays clouds",
+      "space",
+      "starry sky timelapse"
+    ],
     "grade": "eq=saturation=1.1:contrast=1.05,colorbalance=rs=0.06:bs=0.06",
-    "frases": ["imaginação. a vida é a sua criação.", "o universo está do meu lado.", "eu sou o que eu penso.", "tudo que eu peço chega até mim.", "o universo responde à sua energia.", "você atrai o que você vibra."],
-    "hashtags": ["#universo", "#manifestação", "#espiritualidade", "#leidaatração", "#energia"]
+    "frases": [
+      "imaginação. a vida é a sua criação.",
+      "o universo está do meu lado.",
+      "eu sou o que eu penso.",
+      "tudo que eu peço chega até mim.",
+      "o universo responde à sua energia.",
+      "você atrai o que você vibra."
+    ],
+    "hashtags": [
+      "#universo",
+      "#manifestação",
+      "#espiritualidade",
+      "#leidaatração",
+      "#energia"
+    ]
   },
   "flores": {
     "nome": "Flores abrindo (fundo escuro)",
-    "buscas": ["flower blooming", "flower timelapse", "rose blooming", "lily blooming", "tulip timelapse", "lotus flower", "orchid", "cherry blossom", "dahlia", "peony"],
+    "buscas": [
+      "flower blooming black background",
+      "flower timelapse black",
+      "rose blooming timelapse",
+      "lily blooming timelapse",
+      "tulip opening timelapse",
+      "flower opening dark",
+      "orchid black background",
+      "peony blooming"
+    ],
     "grade": "eq=saturation=1.0:contrast=1.08:brightness=-0.05",
-    "frases": ["floresça no seu tempo.", "você está florescendo.", "a sua hora vai chegar.", "devagar, mas florescendo.", "o que é seu vai florescer.", "cada flor tem a sua estação."],
-    "hashtags": ["#floresça", "#autoestima", "#reflexão", "#flores", "#aesthetic"]
+    "frases": [
+      "floresça no seu tempo.",
+      "você está florescendo.",
+      "a sua hora vai chegar.",
+      "devagar, mas florescendo.",
+      "o que é seu vai florescer.",
+      "cada flor tem a sua estação."
+    ],
+    "hashtags": [
+      "#floresça",
+      "#autoestima",
+      "#reflexão",
+      "#flores",
+      "#aesthetic"
+    ]
   }
 }

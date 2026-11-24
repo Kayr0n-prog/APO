@@ -99,7 +99,7 @@ def planejar(i, hoje, hist, estado, cfg, estilos, frases, banco, pasta_banco, ap
             random.shuffle(locais)
         alvo = 14 if corte <= 0.3 else 10
         locais = locais[:max(0, alvo - 4)] if estilo != "flores" else locais[:alvo]
-        px = [] if estilo == "flores" or api is None else clipes_pixabay(api, estilos[estilo], alvo - len(locais), usados, cfg, log)
+        px = [] if api is None else clipes_pixabay(api, estilos[estilo], alvo - len(locais), usados, cfg, log)
         mats = locais + px
         if len(mats) < cfg["video"]["clipes_min"]:
             erros.append("material insuficiente para '%s' (%d locais, %d Pixabay)" % (estilo, len(locais), len(px)))
