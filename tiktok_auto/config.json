@@ -32,7 +32,7 @@
     "minusculas": true,
     "grade_cor": "eq=saturation=0.88:contrast=1.04:brightness=-0.01,colorbalance=rs=0.03:bs=-0.03,vignette=PI/5,noise=alls=3:allf=t"
   },
-  "hashtag_marca": "#todosdias",
+  "hashtag_marca": "",
   "filtro_tags_proibidas": [
     "ai generated",
     "generated",
