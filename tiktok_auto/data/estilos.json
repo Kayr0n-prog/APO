@@ -127,15 +127,13 @@
     "nome": "Espiritual cósmico (galáxias, estrelas, luz)",
     "buscas": [
       "galaxy",
-      "stars night sky",
       "nebula",
-      "aurora borealis",
-      "moon",
       "milky way",
-      "light rays",
-      "sun rays clouds",
-      "space",
-      "starry sky timelapse"
+      "starry sky timelapse",
+      "aurora borealis",
+      "space stars",
+      "universe",
+      "stars night sky"
     ],
     "grade": "eq=saturation=1.1:contrast=1.05,colorbalance=rs=0.06:bs=0.06",
     "frases": [

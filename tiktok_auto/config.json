@@ -78,5 +78,13 @@
     "v45301",
     "v8558",
     "v89066"
-  ]
+  ],
+  "pesos_estilo": {
+    "zen": 3,
+    "cosmos": 3,
+    "clean": 1,
+    "flores": 1,
+    "noite": 1,
+    "luxo": 1
+  }
 }

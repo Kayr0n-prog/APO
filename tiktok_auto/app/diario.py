@@ -19,8 +19,8 @@ from .main import RAIZ, ler_json, gravar_json, pasta_saida, configurar_log, Trav
 
 ESTILOS_CFG = {
     # estilo: (categorias do banco local, temas de frase, corte_s, encaixe, inspiração)
-    "clean": (["thatgirl_autocuidado", "estudo_trabalho"], ["amor_proprio", "disciplina"], 0.25, "cover", "v16"),
-    "noite": (["luxo_noite"], ["disciplina", "amor_proprio"], 0.25, "cover", "v23"),
+    "clean": (["thatgirl_autocuidado", "estudo_trabalho"], ["amor_proprio", "paz"], 0.25, "cover", "v16"),
+    "noite": (["luxo_noite"], ["amor_proprio", "paz"], 0.25, "cover", "v23"),
     "zen": (["zen_lotus", "natureza"], ["paz"], 0.3, "cover", "v07/v08"),
     "luxo": (["luxo_noite"], ["luxo"], 0.3, "cover", "v17"),
     "cosmos": (["cosmos"], ["manifestacao"], 0.6, "cover", "v22/v29"),
@@ -75,9 +75,18 @@ def clipes_pixabay(api, est, n, usados, cfg, log):
 
 def planejar(i, hoje, hist, estado, cfg, estilos, frases, banco, pasta_banco, api, usados, log):
     ontem = (hoje - dt.timedelta(days=1)).isoformat()
-    proibidos = set(hist["estilos"].get(ontem, [])) | {p.get("estilo") for p in estado["videos"]}
+    # pesos vindos dos números da conta (zen e cosmos performaram 2-4x melhor)
+    pesos = cfg.get("pesos_estilo", {})
+    proibidos = {p.get("estilo") for p in estado["videos"]}
+    proibidos |= {e for e in hist["estilos"].get(ontem, []) if pesos.get(e, 1) < 2}
     ultimo = {k: max([d for d, ts in hist["estilos"].items() if k in ts] or ["0"]) for k in ESTILOS_CFG}
-    cands = sorted([k for k in ESTILOS_CFG if k not in proibidos] or list(ESTILOS_CFG), key=lambda k: ultimo[k])
+    livres_e = [k for k in ESTILOS_CFG if k not in proibidos] or list(ESTILOS_CFG)
+    cands = []
+    while livres_e:
+        w = [pesos.get(k, 1) for k in livres_e]
+        k = random.choices(livres_e, weights=w)[0]
+        cands.append(k)
+        livres_e.remove(k)
     lim_f = (hoje - dt.timedelta(days=cfg["dias_sem_repetir_frase"])).isoformat()
     usadas_f = {f for f, d in hist["frases"].items() if d >= lim_f}
     erros = []
@@ -109,13 +118,28 @@ def planejar(i, hoje, hist, estado, cfg, estilos, frases, banco, pasta_banco, ap
         random.shuffle(tags)
         tags = tags[:4] + ([cfg["hashtag_marca"]] if cfg.get("hashtag_marca") else [])
         legenda = "%s %s\n\n%s" % (frase.rstrip("."), random.choice(["🤍", "✨", "🕊️", "🌙", "🪷"]), " ".join(tags))
-        return {"numero": i, "estilo": estilo, "inspiracao": insp, "frase": frase, "corte_s": corte,
+        return {"numero": i, "data": hoje.isoformat(), "estilo": estilo, "inspiracao": insp, "frase": frase, "corte_s": corte,
                 "encaixe": encaixe, "materiais": mats, "legenda": legenda, "hashtags": tags,
                 "status": "planejado"}, None
     return None, "; ".join(erros)
 
 
-def produzir(dia_dir, p, cfg, log):
+def nota_abertura(arq):
+    """Contraste + saturação do 1º quadro: capas fortes (gato preto, galáxia) pontuam alto."""
+    try:
+        raw = subprocess.run(["ffmpeg", "-v", "error", "-i", arq, "-frames:v", "1", "-vf", "scale=64:48",
+                              "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], capture_output=True).stdout
+        px = [raw[i:i + 3] for i in range(0, len(raw) - 2, 3)]
+        lum = [(r * 299 + g * 587 + b * 114) / 1000 for r, g, b in px]
+        media = sum(lum) / len(lum)
+        dp = (sum((l - media) ** 2 for l in lum) / len(lum)) ** 0.5
+        sat = sum(max(c) - min(c) for c in px) / len(px)
+        return dp + 0.5 * sat
+    except Exception:
+        return 0
+
+
+def produzir(dia_dir, p, cfg, log, hist=None):
     num = p["numero"]
     orig = os.path.join(dia_dir, "originais", "video_%d" % num)
     trab = os.path.join(dia_dir, ".trabalho", "video_%d" % num)
@@ -131,6 +155,17 @@ def produzir(dia_dir, p, cfg, log):
                 shutil.copy2(m["arquivo"], dest)
             m["arquivo"] = dest
         m["duracao"] = duracao(m["arquivo"])
+    if not p.get("abertura"):
+        ja = set((hist or {}).get("aberturas", {}).keys())
+        novos = [m for m in p["materiais"] if m["id"] not in ja] or p["materiais"]
+        # imagens do banco da conta abriram os vídeos com mais alcance; têm prioridade
+        cand = [m for m in novos if m["tipo"] == "local"] or novos
+        melhor = max(cand, key=lambda m: nota_abertura(m["arquivo"]))
+        p["materiais"].remove(melhor)
+        p["materiais"].insert(0, melhor)
+        p["abertura"] = melhor["id"]
+        if hist is not None:
+            hist.setdefault("aberturas", {})[melhor["id"]] = p.get("data", "")
     v = cfg["video"]
     rcfg = {"largura": v["largura"], "altura": v["altura"], "fps": v["fps"], "duracao_s": v["duracao_s"],
             "corte_s": p["corte_s"], "encaixe": p["encaixe"],
@@ -231,7 +266,8 @@ def main(argv=None):
                     continue
                 try:
                     log.info("montando vídeo %d (estilo %s, base %s)", p["numero"], p["estilo"], p["inspiracao"])
-                    produzir(dia_dir, p, cfg, log)
+                    produzir(dia_dir, p, cfg, log, hist)
+                    gravar_json(hp, hist)
                     p["status"] = "concluido"
                     p.pop("erro", None)
                 except pb.ErroChave:
