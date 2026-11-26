@@ -48,7 +48,14 @@
     "gym",
     "bodybuilding",
     "dumbbell",
-    "weightlifting"
+    "weightlifting",
+    "school",
+    "classroom",
+    "children",
+    "kids",
+    "ski",
+    "golf",
+    "student"
   ],
   "montagem": {
     "largura": 960,
@@ -60,6 +67,16 @@
   },
   "pasta_banco_local": "%USERPROFILE%\\Pictures\\TikTokBanco",
   "pixabay_bloqueados": [
-    "v39376"
+    "v108078",
+    "v11721",
+    "v146131",
+    "v203449",
+    "v215475",
+    "v2719",
+    "v32945",
+    "v39376",
+    "v45301",
+    "v8558",
+    "v89066"
   ]
 }
