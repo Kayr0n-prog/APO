@@ -22,7 +22,7 @@ ESTILOS_CFG = {
     "clean": (["thatgirl_autocuidado", "estudo_trabalho"], ["amor_proprio", "disciplina"], 0.25, "cover", "v16"),
     "noite": (["luxo_noite"], ["disciplina", "amor_proprio"], 0.25, "cover", "v23"),
     "zen": (["zen_lotus", "natureza"], ["paz"], 0.3, "cover", "v07/v08"),
-    "luxo": (["luxo_noite"], ["manifestacao"], 0.3, "cover", "v17"),
+    "luxo": (["luxo_noite"], ["luxo"], 0.3, "cover", "v17"),
     "cosmos": (["cosmos"], ["manifestacao"], 0.6, "cover", "v22/v29"),
     "flores": (["flores_fundo_preto_gif"], ["paz", "amor_proprio"], 0.6, "contain", "v12"),
 }
